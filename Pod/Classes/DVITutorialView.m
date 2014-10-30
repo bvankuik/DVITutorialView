@@ -2,7 +2,10 @@
 #import <QuartzCore/QuartzCore.h>
 
 
-// If you use Crashlytics, simly change the NSLog below to CLNSLog
+// If uncommented, debugging is disabled
+//#define DLog(...)
+
+// If you use Crashlytics, simply change the NSLog below to CLNSLog
 #define DLog(__FORMAT__, ...) NSLog((@"%s line %d $ " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 // When set to 1, draws a border around most views created in this class. Useful when debugging layout issues
@@ -204,46 +207,60 @@
                                        multiplier:1.f constant:0.f];
         [self addConstraint:centerX];
         
-        DLog(@"currentView.frame.origin.y=%f, self.bounds.size.height=%f", currentView.frame.origin.y, self.bounds.size.height);
-        
-        float distanceToSwipeLabel = (IS_IPAD ? 50.0 : 8.0);
-
-        if(currentView.frame.origin.y < (self.bounds.size.height/2.0)) {
-            // See if we're above or below the middle
-            DLog(@"currently exposed view its origin is in the upper half of the screen");
-            NSLayoutConstraint *bottom = [NSLayoutConstraint
-                                          constraintWithItem:tutorialLabel
-                                          attribute:NSLayoutAttributeBottom
-                                          relatedBy:NSLayoutRelationEqual
-                                          toItem:self.pageControlBottom
-                                          attribute:NSLayoutAttributeTopMargin
-                                          multiplier:1.0f
-                                          constant:-distanceToSwipeLabel];
-            [self addConstraint:bottom];
+        if(CGRectIsEmpty(currentView.frame)) {
+            DLog(@"This view has an empty frame, centering label");
+            NSLayoutConstraint *centerY = [NSLayoutConstraint
+                                           constraintWithItem:tutorialLabel
+                                           attribute:NSLayoutAttributeCenterY
+                                           relatedBy:NSLayoutRelationEqual
+                                           toItem:self
+                                           attribute:NSLayoutAttributeCenterY
+                                           multiplier:1.f constant:0.f];
+            [self addConstraint:centerY];
             
         } else {
-            DLog(@"currently exposed view its origin is in the lower half of the screen");
-            NSLayoutConstraint *top = [NSLayoutConstraint
-                                       constraintWithItem:tutorialLabel
-                                       attribute:NSLayoutAttributeTop
-                                       relatedBy:NSLayoutRelationEqual
-                                       toItem:self.pageControlTop
-                                       attribute:NSLayoutAttributeBottom
-                                       multiplier:1.0f
-                                       constant:distanceToSwipeLabel];
-            [self addConstraint:top];
             
+            DLog(@"currentView.frame.origin.y=%f, self.bounds.size.height=%f", currentView.frame.origin.y, self.bounds.size.height);
+            
+            float distanceToSwipeLabel = (IS_IPAD ? 50.0 : 8.0);
+
+            if(currentView.frame.origin.y < (self.bounds.size.height/2.0)) {
+                // See if we're above or below the middle
+                DLog(@"currently exposed view its origin is in the upper half of the screen");
+                NSLayoutConstraint *bottom = [NSLayoutConstraint
+                                              constraintWithItem:tutorialLabel
+                                              attribute:NSLayoutAttributeBottom
+                                              relatedBy:NSLayoutRelationEqual
+                                              toItem:self.pageControlBottom
+                                              attribute:NSLayoutAttributeTopMargin
+                                              multiplier:1.0f
+                                              constant:-distanceToSwipeLabel];
+                [self addConstraint:bottom];
+                
+            } else {
+                DLog(@"currently exposed view its origin is in the lower half of the screen");
+                NSLayoutConstraint *top = [NSLayoutConstraint
+                                           constraintWithItem:tutorialLabel
+                                           attribute:NSLayoutAttributeTop
+                                           relatedBy:NSLayoutRelationEqual
+                                           toItem:self.pageControlTop
+                                           attribute:NSLayoutAttributeBottom
+                                           multiplier:1.0f
+                                           constant:distanceToSwipeLabel];
+                [self addConstraint:top];
+                
+            }
+            
+            NSLayoutConstraint *width = [NSLayoutConstraint
+                                     constraintWithItem:tutorialLabel
+                                     attribute:NSLayoutAttributeWidth
+                                     relatedBy:NSLayoutRelationLessThanOrEqual
+                                     toItem:self
+                                     attribute:NSLayoutAttributeWidth
+                                     multiplier:1.0f
+                                     constant:-40];
+            [self addConstraint:width];
         }
-        
-        NSLayoutConstraint *width = [NSLayoutConstraint
-                                 constraintWithItem:tutorialLabel
-                                 attribute:NSLayoutAttributeWidth
-                                 relatedBy:NSLayoutRelationLessThanOrEqual
-                                 toItem:self
-                                 attribute:NSLayoutAttributeWidth
-                                 multiplier:1.0f
-                                 constant:-40];
-        [self addConstraint:width];
     }
 }
 
@@ -297,7 +314,6 @@
     if(!constraintsAreSetup) {
         [self setupConstraintsForPageControl:YES];
         [self setupConstraintsForPageControl:NO];
-//        [self setupConstraintsForPageControl];
         constraintsAreSetup = YES;
     }
     
@@ -374,14 +390,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         self.alpha = 0;
     } completion:^(BOOL finished) {
-        self.hidden = YES;
-        currentStep = -1;
-        self.pageControlTop.currentPage = 0;
-        self.pageControlBottom.currentPage = 0;
-        self.pageControlTop.numberOfPages = 0;
-        self.pageControlBottom.numberOfPages = 0;
-        self.tutorialStrings = @[];
-        self.tutorialViews = @[];
+        [self removeFromSuperview];
     }];
 }
 
@@ -543,6 +552,11 @@
     
     // Set the new path
     self.mask.path = maskPath.CGPath;
+}
+
+- (void)dealloc
+{
+    DLog(@"entry");
 }
 
 @end
