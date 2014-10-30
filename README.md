@@ -14,11 +14,6 @@ element in your user interface, and displays an explanation.
 
 ![][demo.gif]
 
-Made with QuickTime screen recording, converted the resulting .mov file to an
-animated gif with:
-
-    ffmpeg -i demo.mov -r 15 demo.gif
-
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
@@ -90,6 +85,13 @@ DVITutorialView is available through [CocoaPods](http://cocoapods.org). To insta
 it, simply add the following line to your Podfile:
 
     pod "DVITutorialView"
+
+## Miscellaneous
+
+Demo made with QuickTime screen recording, converted the resulting .mov file to an
+animated gif with:
+
+    ffmpeg -i demo.mov -r 15 demo.gif
 
 ## Author
 
