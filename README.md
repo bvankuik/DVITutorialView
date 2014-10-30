@@ -27,15 +27,18 @@ code in the action method in your viewcontroller.
                                          @"Explanation on this nice label",
                                          @"Some text on the text field",
                                          @"and finally, what this label is about",
+                                         @"And a thank you on a blank screen",
                                          ];
         tutorialView.tutorialViews = @[
                                        self.button1,
                                        self.label1,
                                        self.textField1,
                                        self.label2
+                                       [[UIView alloc] init],  // No exposed UI elements
                                        ];
         [tutorialView start];
     }
+
 
 Sometimes, you have custom views of which you only want to expose a certain
 portion. Put this in the header file of your custom view:

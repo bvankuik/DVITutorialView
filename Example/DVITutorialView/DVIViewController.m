@@ -41,12 +41,14 @@
                                      @"Explanation on this nice label",
                                      @"Some text on the text field",
                                      @"and finally, what this label is about",
+                                     @"And a thank you on a blank screen",
                                      ];
     tutorialView.tutorialViews = @[
                                    self.button1,
                                    self.label1,
                                    self.textField1,
-                                   self.label2
+                                   self.label2,
+                                   [[UIView alloc] init],
                                    ];
     [tutorialView start];
 }
