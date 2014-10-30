@@ -5,6 +5,15 @@
 [![License](https://img.shields.io/cocoapods/l/DVITutorialView.svg?style=flat)](http://cocoadocs.org/docsets/DVITutorialView)
 [![Platform](https://img.shields.io/cocoapods/p/DVITutorialView.svg?style=flat)](http://cocoadocs.org/docsets/DVITutorialView)
 
+## Demo
+
+![][demo.gif]
+
+Made with QuickTime screen recording, converted the resulting .mov file to an
+animated gif with:
+
+    ffmpeg -i demo.mov -r 15 demo.gif
+
 ## Usage
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
@@ -81,7 +90,10 @@ it, simply add the following line to your Podfile:
 
 Bart van Kuik, bart@dutchvirtual.nl
 
+[demo.gif]: https://raw.githubusercontent.com/bvankuik/images/master/DVITutorialView_demo.gif
+
 ## License
 
 DVITutorialView is available under the MIT license. See the LICENSE file for more info.
+
 
