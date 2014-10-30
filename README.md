@@ -5,6 +5,11 @@
 [![License](https://img.shields.io/cocoapods/l/DVITutorialView.svg?style=flat)](http://cocoadocs.org/docsets/DVITutorialView)
 [![Platform](https://img.shields.io/cocoapods/p/DVITutorialView.svg?style=flat)](http://cocoadocs.org/docsets/DVITutorialView)
 
+
+This tutorial view is meant to be added to a single ViewController, to explain
+its user elements. While swiping through the tutorial, each page exposes an
+element in your user interface, and displays an explanation.
+
 ## Demo
 
 ![][demo.gif]
