@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" 
+    "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+
+<!--
+    Settings file for appledoc. To install appledoc, run:
+    $ brew install appledoc
+
+    To generate documentation, in this directory run:
+    $ appledoc .
+
+    Builds the appledoc for the Conference code and copies it into your docset
+    folder at ~/Library/Developer/Shared/Documentation/DocSets
+
+    Xcode will automatically pick up changes. The resulting documentation is
+    viewable via Xcode help menu -> Documentation and API Reference.
+
+    Then in the left navbar, the newly generated docset can be clicked.
+-->
+
+<plist version="1.0">
+<dict>
+    <key>--project-company</key>
+    <string>Evently</string>
+    <key>--company-id</key>
+    <string>conference</string>
+    <key>--project-name</key>
+    <string>Conference iOS app</string>
+    <key>--output</key>
+    <string>/tmp/appledoc</string>
+    <key>--keep-undocumented-objects</key>
+    <true/>
+    <key>--keep-undocumented-members</key>
+    <false/>
+</dict>
+</plist>
+
