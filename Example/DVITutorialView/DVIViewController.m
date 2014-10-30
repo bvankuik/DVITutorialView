@@ -7,7 +7,7 @@
 //
 
 #import "DVIViewController.h"
-#import <DVITutorialView.h>
+#import <DVITutorialView/DVITutorialView.h>
 
 @interface DVIViewController ()
 @property (weak, nonatomic) IBOutlet UIButton *button1;
