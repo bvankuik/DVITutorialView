@@ -3,10 +3,10 @@
 
 
 // If uncommented, debugging is disabled
-//#define DLog(...)
+#define DLog(...)
 
 // If you use Crashlytics, simply change the NSLog below to CLNSLog
-#define DLog(__FORMAT__, ...) NSLog((@"%s line %d $ " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+//#define DLog(__FORMAT__, ...) NSLog((@"%s line %d $ " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 // When set to 1, draws a border around most views created in this class. Useful when debugging layout issues
 #define DEBUG_BORDERS 0
