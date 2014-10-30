@@ -7,8 +7,13 @@
 //
 
 #import "DVIViewController.h"
+#import <DVITutorialView.h>
 
 @interface DVIViewController ()
+@property (weak, nonatomic) IBOutlet UIButton *button1;
+@property (weak, nonatomic) IBOutlet UILabel *label1;
+@property (weak, nonatomic) IBOutlet UITextField *textField1;
+@property (weak, nonatomic) IBOutlet UILabel *label2;
 
 @end
 
@@ -24,6 +29,26 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)tutorialButtonTapped:(id)sender
+{
+    DVITutorialView *tutorialView = [[DVITutorialView alloc] init];
+    [tutorialView addToView:self.view];
+    
+    tutorialView.tutorialStrings = @[
+                                     @"Explanation on button",
+                                     @"Explanation on this nice label",
+                                     @"Some text on the text field",
+                                     @"and finally, what this label is about",
+                                     ];
+    tutorialView.tutorialViews = @[
+                                   self.button1,
+                                   self.label1,
+                                   self.textField1,
+                                   self.label2
+                                   ];
+    [tutorialView start];
 }
 
 @end
