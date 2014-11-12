@@ -1,5 +1,6 @@
 #import "DVITutorialView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "DVILabelWithInset.h"
 
 
 // If uncommented, debugging is disabled
@@ -64,6 +65,8 @@
     self.tutorialLabels = [[NSMutableArray alloc] init];
     currentStep = -1;
     constraintsAreSetup = NO;
+    self.maskColor = [UIColor colorWithRed:19.0/255.0 green:19.0/255.0 blue:19.0/255.0 alpha:0.95];
+    self.textBackgroundColor = [UIColor colorWithRed:19.0/255.0 green:19.0/255.0 blue:19.0/255.0 alpha:0.50];
     
     // Create UI elements
     [self setupMask];
@@ -96,13 +99,16 @@
 
 - (UILabel *)labelForTutorialWithText:(NSString *)title
 {
-    UILabel *label = [[UILabel alloc] init];
+//    UILabel *label = [[UILabel alloc] init];
+    DVILabelWithInset *label = [[DVILabelWithInset alloc] init];
+    label.edgeInsets = UIEdgeInsetsMake(3, 10, 3, 10);
     [label setFont:[UIFont fontWithName:@"Helvetica Neue" size:18.0]];
     [label setTextAlignment:NSTextAlignmentCenter];
     [label setTextColor:[UIColor whiteColor]];
-    [label setText:title];
-    [label setNumberOfLines:4];
-    [label setBackgroundColor:[UIColor clearColor]];
+    label.text = title;
+    [label setNumberOfLines:0];
+    label.lineBreakMode = NSLineBreakByWordWrapping;
+    [label setBackgroundColor:self.textBackgroundColor];
     label.translatesAutoresizingMaskIntoConstraints = NO;
     
     if(DEBUG_BORDERS) {
@@ -217,6 +223,16 @@
                                            attribute:NSLayoutAttributeCenterY
                                            multiplier:1.f constant:0.f];
             [self addConstraint:centerY];
+            NSLayoutConstraint *width = [NSLayoutConstraint
+                                         constraintWithItem:tutorialLabel
+                                         attribute:NSLayoutAttributeWidth
+                                         relatedBy:NSLayoutRelationLessThanOrEqual
+                                         toItem:self
+                                         attribute:NSLayoutAttributeWidth
+                                         multiplier:1.0f
+                                         constant:-40];
+            [self addConstraint:width];
+
             
         } else {
             
@@ -332,7 +348,7 @@
     [self setupMask];
     CGRect frame = [self frameForCurrentView];
     [self setCutAtRect:frame];
-    UIView *currentView = self.tutorialViews[currentStep];
+    UIView *currentView __unused = self.tutorialViews[currentStep];
     
     DLog(@"currentView.frame=%@", NSStringFromCGRect(currentView.frame));
 }
@@ -401,7 +417,7 @@
     DLog(@"entry");
     CAShapeLayer *layer = [CAShapeLayer layer];
     [layer setFillRule:kCAFillRuleEvenOdd];
-    [layer setFillColor:[[UIColor colorWithRed:19.0/255.0 green:19.0/255.0 blue:19.0/255.0 alpha:0.95] CGColor]];
+    [layer setFillColor:[self.maskColor CGColor]];
     
     if(self.mask != nil) {
         DLog(@"Replacing existing mask");

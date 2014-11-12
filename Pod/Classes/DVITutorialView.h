@@ -12,10 +12,20 @@
 @property (strong, nonatomic) NSArray *tutorialStrings;
 
 /**
- * Set an array of views that will be exposed. If you pass a newly alloc/inited UIView (which has an empty/zero frame),
+ * Set an array of views that will be exposed. If you pass [UIView new] (which has an empty/zero frame),
  * then nothing will be exposed. This is useful for a welcome/exit tutorial page.
  */
-@property (strong, nonatomic)  NSArray *tutorialViews;
+@property (strong, nonatomic) NSArray *tutorialViews;
+
+/**
+ * Override the default mask color.
+ */
+@property (strong, nonatomic) UIColor *maskColor;
+
+/**
+ * Override the default tutorial label background color.
+ */
+@property (strong, nonatomic) UIColor *textBackgroundColor;
 
 /**
  * After instantiation, call this method to add the tutorial view to your viewcontroller's main view and add

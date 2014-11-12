@@ -37,19 +37,22 @@
     [tutorialView addToView:self.view];
     
     tutorialView.tutorialStrings = @[
-                                     @"Explanation on button",
+                                     @"A Loooooong explanation on this button. What could we tell about it?",
                                      @"Explanation on this nice label",
                                      @"Some text on the text field",
                                      @"and finally, what this label is about",
-                                     @"And a thank you on a blank screen",
+                                     @"And a thank you on a blank screen, with a somewhat longer text",
                                      ];
     tutorialView.tutorialViews = @[
-                                   self.button1,
+                                   [UIView new],
                                    self.label1,
                                    self.textField1,
                                    self.label2,
-                                   [[UIView alloc] init],
+                                   self.button1,
                                    ];
+    
+    tutorialView.maskColor = [UIColor colorWithRed:19.0/255.0 green:19.0/255.0 blue:19.0/255.0 alpha:0.75];
+    tutorialView.textBackgroundColor = [UIColor colorWithRed:19.0/255.0 green:19.0/255.0 blue:19.0/255.0 alpha:0.5];
     [tutorialView start];
 }
 
