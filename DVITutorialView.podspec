@@ -1,10 +1,12 @@
 #
-# Be sure to run `pod lib lint DVITutorialView.podspec' to ensure this is a
-# valid spec and remove all comments before submitting the spec.
+# After upping the s.version, do the following
 #
-# Any lines starting with a # are optional, but encouraged
+# $ pod lib lint
+# $ git add -A && git commit -m "Release 0.x.0"
+# $ git tag '0.2.0'
+# $ git push --tags
+# $ pod trunk push
 #
-# To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
 #
 
 Pod::Spec.new do |s|
