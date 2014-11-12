@@ -4,10 +4,10 @@
 
 
 // If uncommented, debugging is disabled
-#define DLog(...)
+//#define DLog(...)
 
 // If you use Crashlytics, simply change the NSLog below to CLNSLog
-//#define DLog(__FORMAT__, ...) NSLog((@"%s line %d $ " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
+#define DLog(__FORMAT__, ...) NSLog((@"%s line %d $ " __FORMAT__), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__)
 
 // When set to 1, draws a border around most views created in this class. Useful when debugging layout issues
 #define DEBUG_BORDERS 0
@@ -432,15 +432,28 @@
     }
 }
 
-// Returns the frame for the view that should be currently highlighted in the tutorial. If the view
-// has a special method for a custom CGRect to be highlighted, call that one.
+// Convenience method
 - (CGRect)frameForCurrentView
 {
     DLog(@"entry");
 
+    return [self frameForViewAtStep:currentStep];
+}
+
+// Returns the frame for the view that should be currently highlighted in the tutorial. If the view
+// has a special method for a custom CGRect to be highlighted, call that one.
+- (CGRect)frameForViewAtStep:(int)step
+{
+    DLog(@"entry");
+    
+    if(step < 0 || step >= [self.tutorialViews count]) {
+        [NSException raise:@"Out of bounds exception"
+                    format:@"Step was %d but tutorialViews only has %zd items", step, [self.tutorialViews count]];
+    }
+
     CGRect retval = CGRectZero;
     CGRect frameToConvert = CGRectZero;
-    UIView *currentView = self.tutorialViews[currentStep];
+    UIView *currentView = self.tutorialViews[step];
     
     if(CGRectIsEmpty(currentView.frame)) {
         // This is appropriate if some kind of welcome or exit text will be displayed
@@ -520,7 +533,7 @@
             previousTutorialLabel.alpha = 0;
         }];
 
-        [self animateCutAtRectToRect:frame];
+        [self animateCutAtRectToRect:frame withStep:step];
     } else {
         // Don't animate transition -- this happens when we get called from the start method
         [self setCutAtRect:frame];
@@ -529,7 +542,7 @@
 
 // For this piece of code you should check
 // https://github.com/modocache/MDCFocusView
-- (void)animateCutAtRectToRect:(CGRect)rect
+- (void)animateCutAtRectToRect:(CGRect)rect withStep:(int)step
 {
     DLog(@"entry");
 
@@ -541,13 +554,28 @@
         [maskPath appendPath:cutoutPath];
     }
     
+    CGPathRef animateFromValue;
+    CGRect rectToAnimateFrom = [self frameForViewAtStep:currentStep - step];
+    CGRect rectToAnimateTo = [self frameForCurrentView];
+    if(CGRectIsEmpty(rectToAnimateFrom)) {
+        DLog(@"starting animation from empty CGRect");
+        rectToAnimateFrom = CGRectMake(CGRectGetMidX(rectToAnimateTo),
+                                       CGRectGetMidY(rectToAnimateTo), 0,0);
+        UIBezierPath *fromPath = [UIBezierPath bezierPathWithRect:self.bounds];
+        UIBezierPath *cutoutPath = [UIBezierPath bezierPathWithRect:rectToAnimateFrom];
+        [fromPath appendPath:cutoutPath];
+        animateFromValue = fromPath.CGPath;
+    } else {
+        animateFromValue = self.mask.path;
+    }
+    
     CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"path"];
     anim.delegate = self;
     anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    anim.duration = 1.0;
+    anim.duration = 0.4;
     anim.removedOnCompletion = NO;
     anim.fillMode = kCAFillModeForwards;
-    anim.fromValue = (__bridge id)(self.mask.path);
+    anim.fromValue = (__bridge id)(animateFromValue);
     anim.toValue = (__bridge id)(maskPath.CGPath);
     [self.mask addAnimation:anim forKey:@"path"];
     self.mask.path = maskPath.CGPath;

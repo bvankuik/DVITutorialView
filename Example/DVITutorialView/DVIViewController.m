@@ -44,8 +44,8 @@
                                      @"And a thank you on a blank screen, with a somewhat longer text",
                                      ];
     tutorialView.tutorialViews = @[
-                                   [UIView new],
                                    self.label1,
+                                   [UIView new],
                                    self.textField1,
                                    self.label2,
                                    self.button1,
