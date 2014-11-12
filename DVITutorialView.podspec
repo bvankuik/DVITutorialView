@@ -9,7 +9,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "DVITutorialView"
-  s.version          = "0.1.0"
+  s.version          = "0.2.0"
   s.summary          = "An Auto Layout based paging tutorial"
   s.description      = <<-DESC
                        This tutorial view is meant to be added to a single
