@@ -37,14 +37,16 @@
     [tutorialView addToView:self.view];
     
     tutorialView.tutorialStrings = @[
-                                     @"A Loooooong explanation on this button. What could we tell about it?",
                                      @"Explanation on this nice label",
-                                     @"Some text on the text field",
-                                     @"and finally, what this label is about",
+                                     @"A long and warm multi-line welcome if you're on a phone. What could we tell more?",
                                      @"And a thank you on a blank screen, with a somewhat longer text",
+                                     @"Some text on the text field",
+                                     @"and what this label is about",
+                                     @"It's a button, folks",
                                      ];
     tutorialView.tutorialViews = @[
                                    self.label1,
+                                   [UIView new],
                                    [UIView new],
                                    self.textField1,
                                    self.label2,

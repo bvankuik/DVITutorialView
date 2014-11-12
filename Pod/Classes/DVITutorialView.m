@@ -554,9 +554,12 @@
         [maskPath appendPath:cutoutPath];
     }
     
+    
     CGPathRef animateFromValue;
     CGRect rectToAnimateFrom = [self frameForViewAtStep:currentStep - step];
     CGRect rectToAnimateTo = [self frameForCurrentView];
+
+    // See if the previous step was an empty frame. If so, we get a nice "opening" animation
     if(CGRectIsEmpty(rectToAnimateFrom)) {
         DLog(@"starting animation from empty CGRect");
         rectToAnimateFrom = CGRectMake(CGRectGetMidX(rectToAnimateTo),
@@ -569,6 +572,20 @@
         animateFromValue = self.mask.path;
     }
     
+    // See if the current step is an empty frame. If so, we get a nice "closing" animation
+    CGPathRef animateToValue;
+    if(CGRectIsEmpty(rectToAnimateTo)) {
+        DLog(@"starting animation to empty CGRect");
+        rectToAnimateTo = CGRectMake(CGRectGetMidX(rectToAnimateFrom),
+                                       CGRectGetMidY(rectToAnimateFrom), 0,0);
+        UIBezierPath *toPath = [UIBezierPath bezierPathWithRect:self.bounds];
+        UIBezierPath *cutoutPath = [UIBezierPath bezierPathWithRect:rectToAnimateTo];
+        [toPath appendPath:cutoutPath];
+        animateToValue = toPath.CGPath;
+    } else {
+        animateToValue = maskPath.CGPath;
+    }
+    
     CABasicAnimation *anim = [CABasicAnimation animationWithKeyPath:@"path"];
     anim.delegate = self;
     anim.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
@@ -576,7 +593,7 @@
     anim.removedOnCompletion = NO;
     anim.fillMode = kCAFillModeForwards;
     anim.fromValue = (__bridge id)(animateFromValue);
-    anim.toValue = (__bridge id)(maskPath.CGPath);
+    anim.toValue = (__bridge id)(animateToValue);
     [self.mask addAnimation:anim forKey:@"path"];
     self.mask.path = maskPath.CGPath;
 }
