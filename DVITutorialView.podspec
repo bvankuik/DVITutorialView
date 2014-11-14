@@ -7,7 +7,6 @@
 # $ git push --tags
 # $ pod trunk push
 #
-#
 
 Pod::Spec.new do |s|
   s.name             = "DVITutorialView"
