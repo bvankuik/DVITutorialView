@@ -380,14 +380,22 @@
     DLog(@"entry");
     self.completion = completion;
     
+    
     // Some checks
+    if(self.superview == nil) {
+        [NSException raise:@"InternalException"
+                    format:@"TutorialView doesn't have a superview, perhaps first call [tutorial addToView:self.view]"];
+        return;
+    }
     if([self.tutorialStrings count] == 0 || [self.tutorialViews count] == 0) {
-        DLog(@"Can't start tutorial, there aren't any");
+        [NSException raise:@"InternalException"
+                    format:@"Can't start tutorial if you haven't set tutorialStrings property"];
         return;
     }
     
     if([self.tutorialStrings count] != [self.tutorialViews count]) {
-        DLog(@"Can't start tutorial, the number of strings and views is not equal");
+        [NSException raise:@"InternalException"
+                    format:@"Unequal number of tutorialStrings and tutorialViews"];
         return;
     }
     
@@ -411,6 +419,8 @@
 - (void)cleanUp
 {
     DLog(@"entry");
+    currentStep = -1;
+    constraintsAreSetup = NO;
     
     [UIView animateWithDuration:0.3 animations:^{
         self.alpha = 0;
