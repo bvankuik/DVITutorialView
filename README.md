@@ -10,6 +10,8 @@ This tutorial view is meant to be added to a single ViewController, to explain
 its user elements. While swiping through the tutorial, each page exposes an
 element in your user interface, and displays an explanation.
 
+AutoLayout is required. Works for all devices.
+
 ## Demo
 
 ![][demo.gif]
@@ -43,7 +45,7 @@ code in the action method in your viewcontroller.
                                        self.label1,
                                        self.textField1,
                                        self.label2
-                                       [[UIView alloc] init],  // No exposed UI elements
+                                       [UIView new],  // No exposed UI elements
                                        ];
         [tutorialView start];
 
