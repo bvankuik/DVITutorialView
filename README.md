@@ -12,6 +12,13 @@ element in your user interface, and displays an explanation.
 
 AutoLayout is required. Works for all devices.
 
+## Installation
+
+Either add the four classes to your project or better yet, use Cocoapods and
+add the following line to your Podfile:
+
+    pod 'DVITutorialView'
+
 ## Demo
 
 ![][demo.gif]
