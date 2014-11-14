@@ -3,14 +3,14 @@
 #
 # $ pod lib lint
 # $ git add -A && git commit -m "Release 0.x.0"
-# $ git tag '0.2.0'
+# $ git tag '0.x.0'
 # $ git push --tags
 # $ pod trunk push
 #
 
 Pod::Spec.new do |s|
   s.name             = "DVITutorialView"
-  s.version          = "0.2.1"
+  s.version          = "0.2.2"
   s.summary          = "An Auto Layout based paging tutorial"
   s.description      = <<-DESC
                        This tutorial view is meant to be added to a single
