@@ -99,6 +99,8 @@ animated gif with:
 
     ffmpeg -i demo.mov -r 15 demo.gif
 
+Inspired by ATTutorialController from Afonso Tsukamoto.
+
 ## Author
 
 Bart van Kuik, bart@dutchvirtual.nl
