@@ -39,5 +39,6 @@
  * After setting the tutorialStrings and tutorialViews properties, call this method.
  */
 - (void)start;
+- (void)startWithCompletion:(void(^)())completion;
 
 @end

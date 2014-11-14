@@ -46,6 +46,12 @@ code in the action method in your viewcontroller.
                                        [[UIView alloc] init],  // No exposed UI elements
                                        ];
         [tutorialView start];
+
+        // Or alternatively:
+        // [tutorialView startWithCompletion:^(){
+        //     NSLog(@"The End!");
+        // }];
+
     }
 
 

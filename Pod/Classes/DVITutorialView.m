@@ -23,6 +23,8 @@
 @property NSMutableArray *tutorialLabels;
 @property UIPageControl *pageControlTop;
 @property UIPageControl *pageControlBottom;
+@property (nonatomic, copy) void (^completion)();
+
 @end
 
 
@@ -370,6 +372,13 @@
 - (void)start
 {
     DLog(@"entry");
+    [self startWithCompletion:nil];
+}
+
+- (void)startWithCompletion:(void(^)())completion
+{
+    DLog(@"entry");
+    self.completion = completion;
     
     // Some checks
     if([self.tutorialStrings count] == 0 || [self.tutorialViews count] == 0) {
@@ -407,6 +416,11 @@
         self.alpha = 0;
     } completion:^(BOOL finished) {
         [self removeFromSuperview];
+        if(self.completion != nil){
+            DLog(@"running completion");
+            self.completion();
+        }
+        self.completion = nil;
     }];
 }
 

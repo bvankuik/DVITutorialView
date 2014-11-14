@@ -1,11 +1,3 @@
-//
-//  DVIViewController.m
-//  DVITutorialView
-//
-//  Created by Bart van Kuik on 10/30/2014.
-//  Copyright (c) 2014 Bart van Kuik. All rights reserved.
-//
-
 #import "DVIViewController.h"
 #import <DVITutorialView/DVITutorialView.h>
 
@@ -55,7 +47,9 @@
     
     tutorialView.maskColor = [UIColor colorWithRed:19.0/255.0 green:19.0/255.0 blue:19.0/255.0 alpha:0.75];
     tutorialView.textBackgroundColor = [UIColor colorWithRed:19.0/255.0 green:19.0/255.0 blue:19.0/255.0 alpha:0.5];
-    [tutorialView start];
+    [tutorialView startWithCompletion:^(){
+        NSLog(@"The End!");
+    }];
 }
 
 @end
