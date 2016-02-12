@@ -14,7 +14,7 @@ AutoLayout is required. Works for all devices.
 
 ## Installation
 
-Either add the four classes to your project or better yet, use Cocoapods and
+Either add the four classes to your project or better yet, use CocoaPods and
 add the following line to your Podfile:
 
     pod 'DVITutorialView'
